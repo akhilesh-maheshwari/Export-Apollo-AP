@@ -1,0 +1,9 @@
+{
+  "actorSpecification": 1,
+  "name": "apollo-lead-scraper",
+  "title": "Apollo Lead Scraper",
+  "description": "Scrapes leads from Apollo.io using a search URL with filters.",
+  "version": "1.0",
+  "dockerfile": "../Dockerfile",
+  "input": "./input_schema.json"
+}
