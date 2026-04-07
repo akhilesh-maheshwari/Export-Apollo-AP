@@ -1,4 +1,4 @@
-import { Actor } from 'apify';
+import { Actor } from 'apify'
 
 await Actor.init();
 
