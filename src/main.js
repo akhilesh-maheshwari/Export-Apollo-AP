@@ -195,8 +195,6 @@ try {
   const masterFileUrl     = wf1Data.masterFileUrl     || '';
   const total_batches     = parseInt(wf1Data.total_batches || '0');
   const batchFolderId     = wf1Data.batchFolderId     || '';
-  const nocodb_master_id  = wf1Data.nocodb_master_id  || '';
-  const batch_id          = wf1Data.batch_id          || '';
 
   if (!request_unique_id) throw new Error('No request_unique_id returned from Step 1!');
 
@@ -220,7 +218,7 @@ try {
         {
           method : 'POST',
           headers: { 'Content-Type': 'application/json' },
-          signal : AbortSignal.timeout(300000),
+          signal : AbortSignal.timeout(60000), // ✅ Fixed: was 300000
           body   : JSON.stringify({
             request_unique_id,
             batchFolderId,
@@ -271,7 +269,7 @@ try {
 
     const batchStatusResults = await Promise.all(
       batchJobs.map(async (job) => {
-        const { request_id, driveInputLink, batch_number, nocodb_id } = job;
+        const { request_id, driveInputLink, batch_number } = job; // ✅ Removed: nocodb_id
         console.log(`  ⏳ Batch ${batch_number} — Polling status (request_id: ${request_id})...`);
 
         const maxAttempts  = 10;
@@ -416,7 +414,7 @@ try {
           {
             method : 'POST',
             headers: { 'Content-Type': 'application/json' },
-            signal : AbortSignal.timeout(60000),
+            signal : AbortSignal.timeout(120000), // ✅ Fixed: was 60000
             body   : JSON.stringify({
               userId,
               runId,
