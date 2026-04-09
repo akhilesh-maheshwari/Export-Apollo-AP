@@ -1,6 +1,6 @@
 import { Actor } from 'apify';
 
-await Actor.init();
+await Actor.init()
 
 try {
 
