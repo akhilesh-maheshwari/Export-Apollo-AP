@@ -8,14 +8,16 @@
       "type": "string",
       "description": "Paste the full Apollo.io search URL with all your filters applied. Make sure you are logged in before copying.",
       "editor": "textfield",
-      "example": "https://app.apollo.io/#/people?sortByField=recommendations_score&page=1"
+      "example": "https://app.apollo.io/#/people?sortByField=recommendations_score&page=1",
+      "prefill": "https://app.apollo.io/#/people?sortByField=recommendations_score&page=1"
     },
     "resultsFileName": {
       "title": "Results File Name",
       "type": "string",
       "description": "Name your output file (no extension). Only letters, numbers, _ and - allowed.",
       "editor": "textfield",
-      "example": "SaaS_Founders_India_April2026"
+      "example": "SaaS_Founders_India_April2026",
+      "prefill": "SaaS_Founders_India_April2026"
     },
     "leadsCount": {
       "title": "How Many Leads Do You Need?",
