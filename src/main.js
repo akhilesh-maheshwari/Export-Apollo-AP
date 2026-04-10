@@ -11,7 +11,7 @@ try {
   const serviceTagName    = input.resultsFileName  || '';
   const apolloUrl         = input.apolloUrl        || '';
   const leadsCount        = parseInt(input.leadsCount || '1000', 10);
-  const serviceName       = 'Apollo Lead Scraper';
+  const serviceName       = 'Export Apollo';
   const serviceOption1    = 'apollo';
   const requestSource     = 'Apollo_Lead_Scraper_AP';
   const boomerangInputUrl = 'https://s1.boomerangserver.co.in/webhook/private-apollo-scraper';
