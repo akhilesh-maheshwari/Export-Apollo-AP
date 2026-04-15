@@ -35,7 +35,6 @@ try {
   const fileName   = serviceTagName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + new Date().toISOString().replace(/[:.]/g, '-') + '.csv';
 
   console.log('Row count :', rowCount);
-  console.log('File name :', fileName);
 
   // ──────────────────────────────
   // 3. GET APIFY RUN DETAILS
@@ -54,7 +53,6 @@ try {
     timeZone: 'Asia/Kolkata'
   });
 
-  console.log('User ID :', userId);
   console.log('Run ID  :', runId);
   console.log('Time    :', time);
 
@@ -62,7 +60,6 @@ try {
   // 4. CALCULATE COST
   // ──────────────────────────────
   const creditsCost = parseFloat((rowCount * 0.005).toFixed(3));
-  console.log('Leads count  :', rowCount);
   console.log('Credits cost : $', creditsCost);
 
   // ──────────────────────────────
@@ -179,8 +176,6 @@ try {
   }
 
   const wf1Text = await wf1Res.text();
-  console.log('n8n step 1 status  :', wf1Res.status);
-  console.log('n8n step 1 response:', wf1Text);
 
   if (!wf1Res.ok) throw new Error(`Step 1 error ${wf1Res.status}: ${wf1Text.slice(0, 200)}`);
 
@@ -192,7 +187,6 @@ try {
   }
 
   const request_unique_id = wf1Data.request_unique_id || '';
-  const masterFileUrl     = wf1Data.masterFileUrl     || '';
   const total_batches     = parseInt(wf1Data.total_batches || '0');
   const batchFolderId     = wf1Data.batchFolderId     || '';
 
@@ -200,7 +194,6 @@ try {
 
   console.log('\n✅ Step 1 Complete!');
   console.log('   Request ID    :', request_unique_id);
-  console.log('   Master File   :', masterFileUrl);
   console.log('   Total Batches :', total_batches);
 
   // ──────────────────────────────
@@ -218,7 +211,7 @@ try {
         {
           method : 'POST',
           headers: { 'Content-Type': 'application/json' },
-          signal : AbortSignal.timeout(60000), // ✅ Fixed: was 300000
+          signal : AbortSignal.timeout(60000),
           body   : JSON.stringify({
             request_unique_id,
             batchFolderId,
@@ -238,8 +231,6 @@ try {
         }
       );
       const wf2Text = await wf2Res.text();
-      console.log('n8n step 2 status  :', wf2Res.status);
-      console.log('n8n step 2 response:', wf2Text);
       if (!wf2Text || wf2Text.trim() === '') return null;
       const wf2Data = JSON.parse(wf2Text);
       return wf2Data.batchJobs || null;
@@ -265,11 +256,9 @@ try {
     console.log(`         Processed so far : ${allBatchResults.length}/${total_batches}`);
     console.log(`════════════════════════════════════`);
 
-    console.log(`\n  Sending ${batchJobs.length} batches to n8n for status checking...`);
-
     const batchStatusResults = await Promise.all(
       batchJobs.map(async (job) => {
-        const { request_id, driveInputLink, batch_number } = job; // ✅ Removed: nocodb_id
+        const { request_id, driveInputLink, batch_number } = job;
         console.log(`  ⏳ Batch ${batch_number} — Polling status (request_id: ${request_id})...`);
 
         const maxAttempts  = 10;
@@ -414,7 +403,7 @@ try {
           {
             method : 'POST',
             headers: { 'Content-Type': 'application/json' },
-            signal : AbortSignal.timeout(120000), // ✅ Fixed: was 60000
+            signal : AbortSignal.timeout(120000),
             body   : JSON.stringify({
               userId,
               runId,
@@ -436,7 +425,6 @@ try {
           }
         );
         const outputText = await outputRes.text();
-        console.log(`  Batch ${batch_number} output raw response:`, outputText);
         if (outputRes.ok) {
           try {
             const outputData = JSON.parse(outputText);
