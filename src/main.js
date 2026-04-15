@@ -30,9 +30,9 @@ try {
   // ──────────────────────────────
   // 2. PREPARE CSV PAYLOAD
   // ──────────────────────────────
-  const rowCount   = leadsCount;
-  const csvContent = 'apollo_url,leads_count\n' + `"${apolloUrl}",${leadsCount}`;
-  const fileName   = serviceTagName.replace(/[^a-zA-Z0-9]/g, '_') + '_' + new Date().toISOString().replace(/[:.]/g, '-') + '.csv';
+  const rowCount = leadsCount;
+
+  // NOTE: csvContent removed — URL is sent directly as service_request_url
 
   console.log('Row count :', rowCount);
 
@@ -159,9 +159,8 @@ try {
           serviceTagName,
           rowCount,
           creditsCost,
-          csvContent,
+          service_request_url: apolloUrl,
           uploadedFile    : '',
-          fileName,
           boomerangInputUrl,
           apolloUrl,
           leadsCount,
